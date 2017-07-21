@@ -1,4 +1,4 @@
-<p>Автоматизация на GULP + LESS</p>
+<p>Автоматизация на GULP + SASS</p>
 <table><thead>
 <tr>
 <th>Команда</th>
