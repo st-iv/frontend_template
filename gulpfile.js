@@ -12,6 +12,7 @@ var gulp = require('gulp'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
     browserSync = require("browser-sync"),
+    spriteSmith = require ("gulp.spritesmith"),
     reload = browserSync.reload;
 
 var path = {
@@ -20,6 +21,7 @@ var path = {
         js: 'build/js/',
         css: 'build/css/',
         img: 'build/img/',
+        icons: 'build/icons/',
         fonts: 'build/fonts/'
     },
     src: { //Пути откуда брать исходники
@@ -27,6 +29,7 @@ var path = {
         js: 'src/js/main.js',//В стилях и скриптах нам понадобятся только main файлы
         style: 'src/style/style.scss',
         img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
+        icons: 'src/icons/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
     watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
@@ -34,6 +37,7 @@ var path = {
         js: 'src/js/**/*.js',
         style: 'src/style/**/*.scss',
         img: 'src/img/**/*.*',
+        icons: 'src/icons/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
     clean: './build'
@@ -46,7 +50,7 @@ var config = {
     tunnel: true,
     host: 'localhost',
     port: 9000,
-    logPrefix: "Frontend_Devil"
+    logPrefix: "Frontend_template"
 };
 
 gulp.task('html:build', function () {
@@ -93,6 +97,15 @@ gulp.task('image:build', function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('icons:build', function() {
+    gulp.src(path.src.icons).pipe(spriteSmith({
+            imgName: 'sprite.png',
+            cssName: 'sprite.css'
+            }))
+        .pipe(gulp.dest(path.build.icons))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('fonts:build', function() {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts))
@@ -108,6 +121,7 @@ gulp.task('build', [
     'style:build',
     'fonts:build',
     'image:build',
+    'icons:build'
 ]);
 
 gulp.task('watch', function(){
@@ -123,6 +137,9 @@ gulp.task('watch', function(){
     watch([path.watch.img], function(event, cb) {
         gulp.start('image:build');
     });
+    watch([path.watch.icons], function(event, cb) {
+        gulp.start('icons:build');
+    });    
     watch([path.watch.fonts], function(event, cb) {
         gulp.start('fonts:build');
     });

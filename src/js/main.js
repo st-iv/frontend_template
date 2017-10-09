@@ -6,6 +6,8 @@
 
 //= ../../bower_components/jquery-migrate/jquery-migrate.min.js
 
+//= partials/slick.min.js
+
 /*
  * Custom
  */

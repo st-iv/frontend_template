@@ -2,6 +2,8 @@
 * Libs
 */
 @import "../../bower_components/normalize.css/normalize.css";
+@import "../style/partials/slick";
+@import "../style/partials/slick-theme";
 
 
 
@@ -24,6 +26,10 @@ html {
 body {
 	width: 100%;
 	height: 100%;
+}
+
+a, a:hover, a:active, a:focus {
+	text-decoration: none;
 }
 
 .wrapper {
